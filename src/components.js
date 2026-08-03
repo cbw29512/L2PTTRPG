@@ -1,12 +1,18 @@
-const escapeHtml = value => String(value).replace(/[&<>"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[char]));
+const escapeHtml = value => String(value).replace(/[&<>\"]/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;" }[char]));
+
+const d20Geometry = `
+  <path class="badge-frame" d="M50 5 91 33 76 85H24L9 33Z"/>
+  <path d="M50 5v34M9 33l41 6 41-6M24 85l26-46 26 46M9 33l15 52M91 33 76 85"/>
+  <text class="badge-glyph badge-number" x="50" y="65" text-anchor="middle">20</text>
+`;
 
 const iconArt = {
-  d20: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 5 91 34 76 84H24L9 34Z"/><path d="m50 5 0 34M9 34l41 5 41-5M24 84l26-45 26 45M9 34l15 50M91 34 76 84"/><path class="badge-accent" d="M38 64h24M42 57l8-9 8 9"/></svg>`,
-  spark: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 6 90 31 79 79 50 94 21 79 10 31Z"/><path d="m50 6 0 33M10 31l40 8 40-8M21 79l29-40 29 40"/><path class="badge-accent" d="m72 12 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z"/></svg>`,
-  three: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 6 88 25v50L50 94 12 75V25Z"/><circle cx="50" cy="50" r="23"/><path d="M50 6v21M12 25l19 11M88 25 69 36M12 75l19-11M88 75 69 64M50 94V73"/><path class="badge-accent" d="M38 42c4-7 18-8 23-1 3 5 0 10-7 11 8 1 11 7 7 13-6 8-21 5-24-2"/></svg>`,
-  eye: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M8 51c12-21 27-31 42-31s30 10 42 31C80 72 65 82 50 82S20 72 8 51Z"/><circle cx="50" cy="51" r="17"/><circle class="badge-accent" cx="50" cy="51" r="6"/><path d="M24 20 14 9M76 20 86 9M50 17V5M18 70 7 79M82 70l11 9"/></svg>`,
-  duality: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 8C28 8 12 24 12 45c0 25 24 42 38 49 14-7 38-24 38-49C88 24 72 8 50 8Z"/><path d="M50 8v86M50 36c-12-14-31-5-31 10 0 14 14 24 31 34M50 36c12-14 31-5 31 10 0 14-14 24-31 34"/><circle class="badge-accent" cx="35" cy="45" r="5"/><path class="badge-accent" d="m65 38 8 7-8 7-8-7Z"/></svg>`,
-  blood: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 7c8 15 28 32 28 54 0 17-12 30-28 30S22 78 22 61C22 39 42 22 50 7Z"/><path d="M31 55c8-11 30-11 38 0M35 55l7 18 8-12 8 12 7-18"/><path class="badge-accent" d="M29 28c8 0 14 6 14 14-8 0-14-6-14-14Zm42 0c-8 0-14 6-14 14 8 0 14-6 14-14Z"/></svg>`
+  d20: `<svg viewBox="0 0 100 100" focusable="false">${d20Geometry}<path class="badge-accent-line" d="M31 74h38"/></svg>`,
+  spark: `<svg viewBox="0 0 100 100" focusable="false">${d20Geometry}<path class="badge-accent" d="m78 9 3.4 9.6L91 22l-9.6 3.4L78 35l-3.4-9.6L65 22l9.6-3.4Z"/></svg>`,
+  three: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 6 88 27v46L50 94 12 73V27Z"/><path d="M50 6v16M12 27l14 8M88 27l-14 8M12 73l14-8M88 73l-14-8M50 94V78"/><circle cx="50" cy="50" r="27"/><text class="badge-glyph badge-action" x="50" y="61" text-anchor="middle">3A</text></svg>`,
+  eye: `<svg viewBox="0 0 100 100" focusable="false"><circle class="badge-frame" cx="50" cy="50" r="43"/><path class="badge-silhouette" d="M33 35 16 21l6 25 12 7m32-18 18-14-6 25-12 7M31 48c0-17 8-27 19-27s19 10 19 27v11c0 6-4 10-10 12H41c-6-2-10-6-10-12Z"/><path class="badge-cutout" d="m37 45 10 3-10 4Zm26 0-10 3 10 4Z"/><path d="M37 65c-7 8-8 16-4 23M44 67c-4 8-3 15 1 21M50 68v22M56 67c4 8 3 15-1 21M63 65c7 8 8 16 4 23"/></svg>`,
+  duality: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 8C28 8 12 24 12 45c0 25 24 42 38 49 14-7 38-24 38-49C88 24 72 8 50 8Z"/><path class="badge-blade" d="M50 16 57 35 50 75 43 35Z"/><path d="M50 75v14M42 82h16"/><circle class="badge-accent" cx="30" cy="48" r="6"/><path class="badge-accent" d="m70 40 8 8-8 8-8-8Z"/></svg>`,
+  blood: `<svg viewBox="0 0 100 100" focusable="false"><path class="badge-frame" d="M50 7 82 23v34c0 18-13 30-32 37-19-7-32-19-32-37V23Z"/><path d="M24 43c13 10 39 10 52 0M29 51c12 6 30 6 42 0"/><path class="badge-fangs" d="m31 48 16 5-9 30Zm38 0-16 5 9 30Z"/><path class="badge-blood" d="M50 61c5 7 8 12 8 16a8 8 0 0 1-16 0c0-4 3-9 8-16Z"/></svg>`
 };
 
 export const icon = name => `<span class="system-icon system-icon--${escapeHtml(name)}" aria-hidden="true">${iconArt[name] || iconArt.d20}</span>`;
