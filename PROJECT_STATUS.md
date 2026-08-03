@@ -18,7 +18,7 @@ Build an accessible, SEO-friendly, multi-system tabletop roleplaying game learni
 
 ## Current public release
 
-Current `main` release commit: `2d57d6ffd2b7d43f835d6c8c8559949d17169385`
+Current release: the latest successful deployment from `main`.
 
 Deployment model: GitHub Pages workflow triggered by pushes to `main` after the repository test command passes.
 
@@ -40,18 +40,25 @@ Deployment model: GitHub Pages workflow triggered by pushes to `main` after the 
 - Community discovery prototype with filters, coarse locations, accessibility notes, safety tools, and example trust markers.
 - Public contact is disabled.
 - Original inline SVG system badges.
+- Corrected badge directions:
+  - D&D 2014: clear faceted d20 with visible `20`.
+  - D&D 2024: clear faceted d20 with visible `20` and revision spark.
+  - Pathfinder 2E: tactical badge with visible `3A`.
+  - Call of Cthulhu: original winged and tentacled eldritch silhouette.
+  - Daggerheart: original heart, blade, circle, and diamond duality badge.
+  - Vampire V5: original twin-fang shield with a blood-drop accent.
+- Badge visual-direction documentation and dated visual audit.
 - Basic responsive styling, skip navigation, visible focus, reduced-motion support, semantic page structure, and route-focus handling.
-- Basic tests for system records, editions, sources, route parsing, blog/listing presence, and unique SVG badges.
+- Basic tests for system records, editions, sources, route parsing, blog/listing presence, unique SVG badges, and approved badge concepts.
 
 ## Prototype or partial
 
 - **System guides:** useful orientation, not yet the thorough step-by-step curriculum originally requested.
-- **System badges:** original and distinct, but the latest visual direction is not fully implemented. Pathfinder should read clearly as `3A`; Call of Cthulhu should use an original eldritch/Cthulhu silhouette instead of the current eye; Vampire should use clearer fangs.
 - **Blog:** four short launch posts, not yet a full editorial program.
 - **Licensing:** good boundary summaries, but no source-level citation/reviewer/status workflow and no professional legal review.
 - **SEO:** one generic HTML document and metadata record; hash-routed system/blog content is not yet a complete indexable page architecture.
 - **Accessibility:** accessibility-conscious foundation, not a completed WCAG/ADA audit.
-- **Testing:** data-shape tests exist, but no browser rendering, accessibility, visual regression, broken-link, metadata, or public-deployment smoke tests.
+- **Testing:** data-shape and badge-concept tests exist, but no browser rendering, accessibility, visual regression, broken-link, metadata, or public-deployment smoke tests.
 - **Community:** demonstration listings and trust concepts only; no accounts, real vetting, private messages, reporting, blocking, moderation, or youth protections.
 
 ## Not implemented
@@ -75,13 +82,14 @@ Deployment model: GitHub Pages workflow triggered by pushes to `main` after the 
 6. Do not expose public contact information or claim real vetting until the secure community work is complete.
 7. Do not claim full ADA/WCAG compliance until the documented accessibility audit is complete.
 8. Do not monetize rules downloads or compatibility products until the research/licensing release gate is complete.
+9. Visual acceptance requires a rendered comparison review; unique SVG markup alone is not sufficient.
 
 ## Workstreams
 
 | Priority | Workstream | Status | Tracking |
 |---|---|---|---|
 | P0 | Secure community accounts, messaging, reports, moderation, and youth safety | Blocked / future backend | #1 |
-| P1 | Original badge refinement: d20, Pathfinder `3A`, eldritch Cthulhu, vampire fangs | Open | #4 |
+| P1 | Original badge refinement: d20, Pathfinder `3A`, eldritch Cthulhu, vampire fangs | Complete after corrected deployment | #4 |
 | P1 | Thorough player and GM curricula for every system | Open | #5 |
 | P1 | Crawlable SEO/static-page architecture and per-page metadata | Open | #6 |
 | P1 | Accessibility, responsive UX, and performance QA | Open | #7 |
@@ -96,7 +104,7 @@ Deployment model: GitHub Pages workflow triggered by pushes to `main` after the 
 
 1. #10 Refactor readable modules and expand tests.
 2. #8 Add source/reviewer/status/licensing workflow.
-3. #4 Finish the approved original badge direction.
+3. Badge direction completed under #4; preserve it through rendered visual review.
 
 ### Phase 2 — Build the learning product
 
@@ -115,6 +123,7 @@ A feature is complete only when:
 
 - the implementation is merged;
 - automated checks pass;
+- visual changes receive a rendered comparison review;
 - accessibility impact is reviewed;
 - content sources and licensing status are recorded;
 - documentation and this status file are updated;
