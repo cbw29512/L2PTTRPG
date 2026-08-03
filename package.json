@@ -1,0 +1,1 @@
+{"name":"l2pttrpg","private":true,"type":"module","scripts":{"test":"node tests/site.test.mjs"}}
