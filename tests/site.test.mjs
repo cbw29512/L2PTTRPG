@@ -4,9 +4,15 @@ import { posts } from "../src/data/blog.js";
 import { listings } from "../src/data/community.js";
 import { parseHash } from "../src/router.js";
 import { icon } from "../src/components.js";
+import { learningTopics } from "../src/data/learn.js";
 
 try {
   assert.equal(systems.length, 6);
+  for (const requiredTopic of ["terminology","play","dm","dice","saves","combat","damage","characters","monsters","magic"]) {
+    assert.ok(learningTopics[requiredTopic], `Missing learning topic: ${requiredTopic}`);
+  }
+  assert.equal(learningTopics.damage.damageTypes.length, 13, "Damage lesson must cover all 13 standard damage types.");
+  assert.equal(learningTopics.saves.chunks.length, 6, "Saving throw lesson must cover all six abilities.");
   assert.equal(new Set(systems.map(system => system.id)).size, systems.length);
   assert.equal(new Set(systems.map(system => system.icon)).size, systems.length, "Each launch system needs a distinct badge.");
 
