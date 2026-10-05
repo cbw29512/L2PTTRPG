@@ -42,6 +42,31 @@ render();
 
 const roll = sides => Math.floor(Math.random() * sides) + 1;
 
+const renderSave = ({ type, mod, dc, die }) => {
+  const total = die + mod;
+  const pass = total >= dc;
+  document.querySelector("#save-die").textContent = String(die);
+  document.querySelector("#save-result").textContent = `${type} save: ${die} + ${mod} = ${total} — ${pass ? "PASS" : "FAIL"}`;
+  document.querySelector("#save-explain").textContent = pass
+    ? `You met or beat DC ${dc}. The specific rule now tells you what success changes: no effect, half damage, reduced effect, or something else.`
+    : `You did not reach DC ${dc}. Apply the failure effect written by the spell, trap, monster ability, or hazard.`;
+};
+
+const renderAttack = ({ attackMod, ac, damageSides, damageMod, die }) => {
+  const total = die + attackMod;
+  const hit = die === 20 || (die !== 1 && total >= ac);
+  document.querySelector("#attack-die").textContent = String(die);
+  if (!hit) {
+    document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — MISS`;
+    document.querySelector("#attack-explain").textContent = "Because the attack missed, no weapon damage roll is made.";
+    return;
+  }
+  const damageRoll = roll(damageSides);
+  const damage = damageRoll + damageMod;
+  document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — HIT`;
+  document.querySelector("#attack-explain").textContent = `Now roll damage: d${damageSides} rolled ${damageRoll} + ${damageMod} = ${damage} damage.`;
+};
+
 root.addEventListener("click", event => {
   try {
     if (event.target.id === "roll-die") {
@@ -52,38 +77,25 @@ root.addEventListener("click", event => {
       document.querySelector("#roll-explain").textContent = `d${sides} = one ${sides}-sided die. This roll landed on ${result}.`;
     }
 
-    if (event.target.id === "roll-save") {
+    if (["roll-save","show-save-pass","show-save-fail"].includes(event.target.id)) {
       const type = document.querySelector("#save-type")?.value || "Dexterity";
       const mod = Number(document.querySelector("#save-mod")?.value || 0);
       const dc = Number(document.querySelector("#save-dc")?.value || 10);
-      const die = roll(20);
-      const total = die + mod;
-      const pass = total >= dc;
-      document.querySelector("#save-die").textContent = String(die);
-      document.querySelector("#save-result").textContent = `${type} save: ${die} + ${mod} = ${total} — ${pass ? "PASS" : "FAIL"}`;
-      document.querySelector("#save-explain").textContent = pass
-        ? `You met or beat DC ${dc}. The specific rule now tells you what success changes: no effect, half damage, reduced effect, or something else.`
-        : `You did not reach DC ${dc}. Apply the failure effect written by the spell, trap, monster ability, or hazard.`;
+      let die = roll(20);
+      if (event.target.id === "show-save-pass") die = Math.min(20, Math.max(1, dc - mod));
+      if (event.target.id === "show-save-fail") die = Math.max(1, Math.min(20, dc - mod - 1));
+      renderSave({ type, mod, dc, die });
     }
 
-    if (event.target.id === "roll-attack") {
+    if (["roll-attack","show-hit","show-miss"].includes(event.target.id)) {
       const attackMod = Number(document.querySelector("#attack-mod")?.value || 0);
       const ac = Number(document.querySelector("#target-ac")?.value || 10);
       const damageSides = Number(document.querySelector("#damage-die")?.value || 8);
       const damageMod = Number(document.querySelector("#damage-mod")?.value || 0);
-      const die = roll(20);
-      const total = die + attackMod;
-      const hit = die === 20 || (die !== 1 && total >= ac);
-      document.querySelector("#attack-die").textContent = String(die);
-      if (!hit) {
-        document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — MISS`;
-        document.querySelector("#attack-explain").textContent = "Because the attack missed, no weapon damage roll is made.";
-      } else {
-        const damageRoll = roll(damageSides);
-        const damage = damageRoll + damageMod;
-        document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — HIT`;
-        document.querySelector("#attack-explain").textContent = `Now roll damage: d${damageSides} rolled ${damageRoll} + ${damageMod} = ${damage} damage.`;
-      }
+      let die = roll(20);
+      if (event.target.id === "show-hit") die = Math.min(20, Math.max(2, ac - attackMod));
+      if (event.target.id === "show-miss") die = Math.max(1, Math.min(19, ac - attackMod - 1));
+      renderAttack({ attackMod, ac, damageSides, damageMod, die });
     }
   } catch (error) {
     console.error("[E&S] Interactive lesson failed.", error);
