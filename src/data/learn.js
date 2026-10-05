@@ -1,4 +1,25 @@
 export const learningTopics = {
+  terminology: {
+    title: "D&D Terminology",
+    eyebrow: "Plain-English glossary",
+    intro: "D&D becomes much easier once the vocabulary stops sounding mysterious. Learn the common words in plain English first, then open deeper rules only when you need them.",
+    chunks: [
+      ["DM / Dungeon Master", "The person who presents the world, runs NPCs and monsters, and adjudicates the rules."],
+      ["PC / Player Character", "The hero controlled by a player."],
+      ["NPC", "A non-player character controlled by the DM."],
+      ["d20 test", "A roll using a twenty-sided die plus relevant modifiers to see whether something succeeds."],
+      ["DC", "Difficulty Class: the target number a check or saving throw usually needs to meet or beat."],
+      ["AC", "Armor Class: the target number an attack roll usually needs to meet or beat to hit."],
+      ["Modifier", "A number added to or subtracted from a die roll because of your character, equipment, conditions, or rules."],
+      ["Proficiency", "Training. If you are proficient in something, your proficiency bonus may apply when the rules say it does."],
+      ["Hit Points / HP", "A measure of how much punishment a creature can take before reaching 0 HP."],
+      ["Initiative", "The roll that establishes turn order in combat."],
+      ["Action / Bonus Action / Reaction", "Different parts of the action economy. A bonus action is only available when a rule grants one; a reaction responds to a trigger."],
+      ["Concentration", "A rule used by certain spells that limits how many concentration effects you can maintain and may require a save after damage."],
+      ["Advantage / Disadvantage", "Roll two d20s and keep the higher or lower result, respectively."],
+      ["RAW", "Rules As Written: what the published rule text says, as distinct from a house rule or interpretation."]
+    ]
+  },
   play: {
     title: "I Want to Play D&D",
     eyebrow: "Player path",
