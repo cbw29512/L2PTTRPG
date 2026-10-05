@@ -1,4 +1,4 @@
-import { homeView, systemsView, systemView, blogView, postView, communityView, licensesView, notFoundView } from "./views.js";
+import { homeView, learnView, systemsView, systemView, blogView, postView, communityView, licensesView, notFoundView } from "./views.js";
 import { parseHash } from "./router.js";
 
 const root = document.querySelector("#app");
@@ -8,6 +8,7 @@ const render = () => {
     const { path, filters } = parseHash(location.hash);
     const parts = path.split("/");
     if (path === "home") root.innerHTML = homeView();
+    else if (parts[0] === "learn" && parts[1]) root.innerHTML = learnView(parts[1]);
     else if (path === "systems") root.innerHTML = systemsView();
     else if (path === "blog") root.innerHTML = blogView();
     else if (path === "community") root.innerHTML = communityView(filters);
@@ -37,3 +38,54 @@ root.addEventListener("submit", event => {
 
 window.addEventListener("hashchange", render);
 render();
+
+
+const roll = sides => Math.floor(Math.random() * sides) + 1;
+
+root.addEventListener("click", event => {
+  try {
+    if (event.target.id === "roll-die") {
+      const sides = Number(document.querySelector("#die-select")?.value || 20);
+      const result = roll(sides);
+      document.querySelector("#visual-die").textContent = `d${sides}`;
+      document.querySelector("#roll-result").textContent = `Rolled ${result}`;
+      document.querySelector("#roll-explain").textContent = `d${sides} = one ${sides}-sided die. This roll landed on ${result}.`;
+    }
+
+    if (event.target.id === "roll-save") {
+      const type = document.querySelector("#save-type")?.value || "Dexterity";
+      const mod = Number(document.querySelector("#save-mod")?.value || 0);
+      const dc = Number(document.querySelector("#save-dc")?.value || 10);
+      const die = roll(20);
+      const total = die + mod;
+      const pass = total >= dc;
+      document.querySelector("#save-die").textContent = String(die);
+      document.querySelector("#save-result").textContent = `${type} save: ${die} + ${mod} = ${total} — ${pass ? "PASS" : "FAIL"}`;
+      document.querySelector("#save-explain").textContent = pass
+        ? `You met or beat DC ${dc}. The specific rule now tells you what success changes: no effect, half damage, reduced effect, or something else.`
+        : `You did not reach DC ${dc}. Apply the failure effect written by the spell, trap, monster ability, or hazard.`;
+    }
+
+    if (event.target.id === "roll-attack") {
+      const attackMod = Number(document.querySelector("#attack-mod")?.value || 0);
+      const ac = Number(document.querySelector("#target-ac")?.value || 10);
+      const damageSides = Number(document.querySelector("#damage-die")?.value || 8);
+      const damageMod = Number(document.querySelector("#damage-mod")?.value || 0);
+      const die = roll(20);
+      const total = die + attackMod;
+      const hit = die === 20 || (die !== 1 && total >= ac);
+      document.querySelector("#attack-die").textContent = String(die);
+      if (!hit) {
+        document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — MISS`;
+        document.querySelector("#attack-explain").textContent = "Because the attack missed, no weapon damage roll is made.";
+      } else {
+        const damageRoll = roll(damageSides);
+        const damage = damageRoll + damageMod;
+        document.querySelector("#attack-result").textContent = `Attack: ${die} + ${attackMod} = ${total} vs AC ${ac} — HIT`;
+        document.querySelector("#attack-explain").textContent = `Now roll damage: d${damageSides} rolled ${damageRoll} + ${damageMod} = ${damage} damage.`;
+      }
+    }
+  } catch (error) {
+    console.error("[E&S] Interactive lesson failed.", error);
+  }
+});
